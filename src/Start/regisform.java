@@ -30,6 +30,8 @@ public class regisform extends javax.swing.JFrame {
         initComponents();
     }
     public String destination = "";
+    public String answer = "";
+    public String question = "";
     
     public static boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -358,8 +360,8 @@ public class regisform extends javax.swing.JFrame {
         String password = passHash.hashPassword(pass.getText());
         String password2 = passHash.hashPassword(cpass.getText());
             
-        if(db.insertData("INSERT INTO tbl_user (u_fname, u_lname, u_username, u_email, u_type, u_status, u_image, u_pass, u_cpass)"  
-            + "VALUES ('"+fn.getText()+"', '"+ln.getText()+"', '"+un.getText()+"', '"+em.getText()+"', '"+type.getSelectedItem()+"', 'Pending', '"+destination+"', '"+password+"' ,'"+password2+"')") == 1){
+        if(db.insertData("INSERT INTO tbl_user (u_fname, u_lname, u_username, u_email, u_type, u_status, u_image, u_pass, u_cpass, question, answer)"  
+            + "VALUES ('"+fn.getText()+"', '"+ln.getText()+"', '"+un.getText()+"', '"+em.getText()+"', '"+type.getSelectedItem()+"', 'Pending', '"+destination+"', '"+password+"' ,'"+password2+"', '"+question+"', '"+answer+"')") == 1){
             JOptionPane.showMessageDialog(this, "Create Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             loginform lf = new loginform();
             lf.setVisible(true);

@@ -113,6 +113,11 @@ public class loginform extends javax.swing.JFrame {
         uname.setForeground(new java.awt.Color(255, 255, 255));
         uname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         uname.setText("Forgot Password? Click here");
+        uname.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                unameMouseClicked(evt);
+            }
+        });
         jPanel2.add(uname, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, 230, 30));
 
         sca.setFont(new java.awt.Font("Yu Gothic Medium", 1, 24)); // NOI18N
@@ -216,6 +221,12 @@ public class loginform extends javax.swing.JFrame {
     private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameActionPerformed
+
+    private void unameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_unameMouseClicked
+    emailSearch es = new emailSearch();
+    es.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_unameMouseClicked
 
     /**
      * @param args the command line arguments

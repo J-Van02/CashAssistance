@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2025 at 09:58 AM
+-- Generation Time: May 21, 2025 at 10:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,7 +46,8 @@ CREATE TABLE `tbl_applicant` (
 --
 
 INSERT INTO `tbl_applicant` (`app_id`, `app_uid`, `app_progid`, `app_schoolName`, `app_schoolAddress`, `app_eduLevel`, `app_famIncome`, `app_homeAddress`, `app_progname`, `app_status`, `app_docs`) VALUES
-(2, 7, 1, 'SCC', 'Ward 2', 'College', '10000', 'calajoan', 'Test Program', 'Accepted', '');
+(2, 7, 1, 'SCC', 'Ward 2', 'College', '10000', 'calajoan', 'Test Program', 'Accepted', ''),
+(3, 8, 1, 'Tulat', 'test add', 'test edu level ', 'test income', 'test home add', 'Test Program', 'Accepted', '');
 
 -- --------------------------------------------------------
 
@@ -109,7 +110,16 @@ INSERT INTO `tbl_logs` (`log_id`, `log_uid`, `log_action`, `log_timestamp`) VALU
 (21, 7, 'User Login:Test', '2025-05-21 07:29:51'),
 (22, 7, 'User Login:Test', '2025-05-21 07:35:09'),
 (23, 7, 'User Login:Test', '2025-05-21 07:43:19'),
-(24, 7, 'User Logout:Test', '2025-05-21 07:43:35');
+(24, 7, 'User Logout:Test', '2025-05-21 07:43:35'),
+(25, 3, 'User Login:laluna', '2025-05-21 08:01:32'),
+(26, 3, 'Create a user: testuser', '2025-05-21 08:02:38'),
+(27, 3, 'User Logout:laluna', '2025-05-21 08:02:47'),
+(28, 3, 'User Login:laluna', '2025-05-21 08:05:14'),
+(29, 3, 'Accepted Application Request: 3', '2025-05-21 08:05:31'),
+(30, 3, 'User Logout:laluna', '2025-05-21 08:05:41'),
+(31, 3, 'User Login:laluna', '2025-05-21 08:07:03'),
+(32, 3, 'User Login:laluna', '2025-05-21 08:13:46'),
+(33, 3, 'User Login:laluna', '2025-05-21 08:15:06');
 
 -- --------------------------------------------------------
 
@@ -129,7 +139,10 @@ CREATE TABLE `tbl_logs2` (
 --
 
 INSERT INTO `tbl_logs2` (`log_id`, `log_uid`, `log_action`, `log_timestamp`) VALUES
-(1, 7, 'User Login:Test', '2025-05-21 07:44:53');
+(1, 7, 'User Login:Test', '2025-05-21 07:44:53'),
+(2, 8, 'User Login:test last', '2025-05-21 08:02:58'),
+(3, 8, 'Applied to Cash Assistance Program: Test Program', '2025-05-21 08:04:45'),
+(4, 7, 'User Login:Test', '2025-05-21 08:42:23');
 
 -- --------------------------------------------------------
 
@@ -166,17 +179,20 @@ CREATE TABLE `tbl_user` (
   `u_status` varchar(50) NOT NULL,
   `u_image` varchar(50) NOT NULL,
   `u_pass` varchar(50) NOT NULL,
-  `u_cpass` varchar(50) NOT NULL
+  `u_cpass` varchar(50) NOT NULL,
+  `question` varchar(255) NOT NULL,
+  `answer` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`u_id`, `u_fname`, `u_lname`, `u_username`, `u_email`, `u_type`, `u_status`, `u_image`, `u_pass`, `u_cpass`) VALUES
-(3, 'Ivan', 'laluna', 'lan12', 'lan@lan.com', 'Admin', 'Active', '', 'vuGxOZUNnEfiPvhNqTmsgJKxU+HWYs8Au87VBzAPbmE=', 'vuGxOZUNnEfiPvhNqTmsgJKxU+HWYs8Au87VBzAPbmE='),
-(6, 'Karl', 'Campoy', 'Brown', 'campoy@app.com', 'Admin', 'Active', '', 'DRMq8/pzj2GubAGvMUBmNDWzx7fpCVfUbXh+p7//Bi0=', 'DRMq8/pzj2GubAGvMUBmNDWzx7fpCVfUbXh+p7//Bi0='),
-(7, 'Test', 'Test', 'test12', 'test@test.com', 'Applicant', 'Active', '', 'k36NX7tIvUlJU2zWW401xCa4DS+DDFwwjizexCKuIkQ=', 'k36NX7tIvUlJU2zWW401xCa4DS+DDFwwjizexCKuIkQ=');
+INSERT INTO `tbl_user` (`u_id`, `u_fname`, `u_lname`, `u_username`, `u_email`, `u_type`, `u_status`, `u_image`, `u_pass`, `u_cpass`, `question`, `answer`) VALUES
+(3, 'Ivan', 'laluna', 'lan12', 'lan@lan.com', 'Admin', 'Active', '', 'vuGxOZUNnEfiPvhNqTmsgJKxU+HWYs8Au87VBzAPbmE=', 'vuGxOZUNnEfiPvhNqTmsgJKxU+HWYs8Au87VBzAPbmE=', '', ''),
+(6, 'Karl', 'Campoy', 'Brown', 'campoy@app.com', 'Admin', 'Active', '', 'DRMq8/pzj2GubAGvMUBmNDWzx7fpCVfUbXh+p7//Bi0=', 'DRMq8/pzj2GubAGvMUBmNDWzx7fpCVfUbXh+p7//Bi0=', '', ''),
+(7, 'Test', 'Test', 'test12', 'test@test.com', 'Applicant', 'Active', '', 'k36NX7tIvUlJU2zWW401xCa4DS+DDFwwjizexCKuIkQ=', 'k36NX7tIvUlJU2zWW401xCa4DS+DDFwwjizexCKuIkQ=', 'What is your name?', 'K7gNU3sdo+OL0wNhqoVWhr3g6s1xYv72ol/pe/Unols='),
+(8, 'test name', 'test last', 'testuser', 'test@testem.com', 'Applicant', 'Active', '', 'k36NX7tIvUlJU2zWW401xCa4DS+DDFwwjizexCKuIkQ=', 'k36NX7tIvUlJU2zWW401xCa4DS+DDFwwjizexCKuIkQ=', '', '');
 
 --
 -- Indexes for dumped tables
@@ -232,7 +248,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_applicant`
 --
 ALTER TABLE `tbl_applicant`
-  MODIFY `app_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `app_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_cashreleasing`
@@ -244,13 +260,13 @@ ALTER TABLE `tbl_cashreleasing`
 -- AUTO_INCREMENT for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `tbl_logs2`
 --
 ALTER TABLE `tbl_logs2`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_program`
@@ -262,7 +278,7 @@ ALTER TABLE `tbl_program`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

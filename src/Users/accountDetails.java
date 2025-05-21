@@ -107,9 +107,10 @@ public class accountDetails extends javax.swing.JFrame {
         changepass = new javax.swing.JLabel();
         uid = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -190,6 +191,17 @@ public class accountDetails extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 120, 30));
 
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Security Question");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 190, 43));
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(190, 0, 420, 450);
 
@@ -198,16 +210,6 @@ public class accountDetails extends javax.swing.JFrame {
         jPanel3.setMinimumSize(new java.awt.Dimension(617, 488));
         jPanel3.setPreferredSize(new java.awt.Dimension(617, 488));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("ACCOUNT DETAILS");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-        });
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 190, 43));
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -218,6 +220,16 @@ public class accountDetails extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 190, 26));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("ACCOUNT DETAILS");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 190, 43));
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(0, 0, 190, 450);
@@ -256,7 +268,13 @@ public class accountDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_changepassMouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+    int confirm = JOptionPane.showConfirmDialog(this, "Do you want to add securiy question?\n\nNote: Security question can be use for changing your\npassword if you forgot it", "Seciroty Question", JOptionPane.YES_NO_OPTION);
 
+        if (confirm == JOptionPane.YES_OPTION) {
+            SecurityQ sq = new SecurityQ();
+            sq.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -284,6 +302,10 @@ public class accountDetails extends javax.swing.JFrame {
         
     }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10MouseClicked
 
     /**
      * @param args the command line arguments
@@ -329,6 +351,7 @@ public class accountDetails extends javax.swing.JFrame {
     private javax.swing.JTextField fn;
     private javax.swing.JLabel iddisplay;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

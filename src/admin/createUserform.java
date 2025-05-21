@@ -45,8 +45,8 @@ public class createUserform extends javax.swing.JFrame {
     File selectedFile;
     public String oldpath;
     public String path;
-    //public String answer = "No stored security answers";
-   // public String question = "No stored security questions";
+    public String answer = "";
+    public String question = "";
 
     public int FileExistenceChecker(String path){
         File file = new File(path);
@@ -470,8 +470,8 @@ public class createUserform extends javax.swing.JFrame {
                     }
                 }
             
-        if(db.insertData("INSERT INTO tbl_user (u_fname, u_lname, u_username, u_email, u_type, u_status, u_image, u_pass, u_cpass)"  
-            + "VALUES ('"+fn.getText()+"', '"+ln.getText()+"', '"+un.getText()+"', '"+em.getText()+"', '"+role.getSelectedItem()+"', '"+status.getSelectedItem()+"', '"+imagePath+"', '"+password+"' ,'"+password2+"')") == 1){
+        if(db.insertData("INSERT INTO tbl_user (u_fname, u_lname, u_username, u_email, u_type, u_status, u_image, u_pass, u_cpass, question, answer)"  
+            + "VALUES ('"+fn.getText()+"', '"+ln.getText()+"', '"+un.getText()+"', '"+em.getText()+"', '"+role.getSelectedItem()+"', '"+status.getSelectedItem()+"', '"+imagePath+"', '"+password+"' ,'"+password2+"', '"+question+"', '"+answer+"')") == 1){
             try {
                 if (confirm == JOptionPane.YES_OPTION && selectedFile != null && destination != null && !destination.trim().isEmpty()) {
                     Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
