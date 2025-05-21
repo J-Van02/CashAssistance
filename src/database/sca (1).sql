@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2025 at 10:25 PM
+-- Generation Time: May 21, 2025 at 09:58 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -98,7 +98,38 @@ INSERT INTO `tbl_logs` (`log_id`, `log_uid`, `log_action`, `log_timestamp`) VALU
 (10, 3, 'Accepted Application Request: 2', '2025-05-20 18:59:55'),
 (11, 3, 'Rejected Application Request: 2', '2025-05-20 19:00:08'),
 (12, 3, 'Accepted Application Request: 2', '2025-05-20 19:00:19'),
-(13, 3, 'Released Cash Assistance to: 2', '2025-05-20 20:13:38');
+(13, 3, 'Released Cash Assistance to: 2', '2025-05-20 20:13:38'),
+(14, 3, 'Printed Cash Assistance Result Program Name: Test Program', '2025-05-21 05:18:03'),
+(15, 3, 'User Login:laluna', '2025-05-21 07:09:49'),
+(16, 3, 'User Login:laluna', '2025-05-21 07:10:49'),
+(17, 3, 'User Login:laluna', '2025-05-21 07:13:22'),
+(18, 3, 'User Logout:laluna', '2025-05-21 07:13:45'),
+(19, 7, 'User Login:Test', '2025-05-21 07:29:14'),
+(20, 7, 'User Logout:Test', '2025-05-21 07:29:38'),
+(21, 7, 'User Login:Test', '2025-05-21 07:29:51'),
+(22, 7, 'User Login:Test', '2025-05-21 07:35:09'),
+(23, 7, 'User Login:Test', '2025-05-21 07:43:19'),
+(24, 7, 'User Logout:Test', '2025-05-21 07:43:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_logs2`
+--
+
+CREATE TABLE `tbl_logs2` (
+  `log_id` int(11) NOT NULL,
+  `log_uid` int(11) NOT NULL,
+  `log_action` varchar(255) NOT NULL,
+  `log_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_logs2`
+--
+
+INSERT INTO `tbl_logs2` (`log_id`, `log_uid`, `log_action`, `log_timestamp`) VALUES
+(1, 7, 'User Login:Test', '2025-05-21 07:44:53');
 
 -- --------------------------------------------------------
 
@@ -175,6 +206,13 @@ ALTER TABLE `tbl_logs`
   ADD KEY `log_uid` (`log_uid`);
 
 --
+-- Indexes for table `tbl_logs2`
+--
+ALTER TABLE `tbl_logs2`
+  ADD PRIMARY KEY (`log_id`),
+  ADD KEY `log_uid` (`log_uid`);
+
+--
 -- Indexes for table `tbl_program`
 --
 ALTER TABLE `tbl_program`
@@ -206,7 +244,13 @@ ALTER TABLE `tbl_cashreleasing`
 -- AUTO_INCREMENT for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `tbl_logs2`
+--
+ALTER TABLE `tbl_logs2`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_program`
@@ -243,6 +287,12 @@ ALTER TABLE `tbl_cashreleasing`
 --
 ALTER TABLE `tbl_logs`
   ADD CONSTRAINT `tbl_logs_ibfk_1` FOREIGN KEY (`log_uid`) REFERENCES `tbl_user` (`u_id`);
+
+--
+-- Constraints for table `tbl_logs2`
+--
+ALTER TABLE `tbl_logs2`
+  ADD CONSTRAINT `tbl_logs2_ibfk_1` FOREIGN KEY (`log_uid`) REFERENCES `tbl_user` (`u_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

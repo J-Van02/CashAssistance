@@ -30,29 +30,25 @@ public class cashReleasing extends javax.swing.JFrame {
     }
     
     public void displayApplication() {
-    dbConnector db = null;
-    ResultSet rs = null;
-    
-    try {
-        db = new dbConnector();
-        String query = 
-            "SELECT app_id AS 'Application ID', " +
-            "       CONCAT(u_fname, ' ', u_lname) AS 'Full Name', " +
-            "       app_progname AS 'Program Name', " +
-            "       cash_release AS 'Cash Release', " +
-            "       app_status AS 'Status' " +
-            "FROM tbl_user " +
-            "INNER JOIN tbl_applicant ON u_id = app_uid " + 
-            "INNER JOIN tbl_cashreleasing ON cash_appid = app_id " +
-            "WHERE app_status = 'Accepted'";
-        rs = db.getData(query);
+        try {
+            dbConnector db = new dbConnector();
+            ResultSet rs = db.getData(
+                "SELECT app_id AS 'Application ID', " +
+                "CONCAT(tbl_user.u_fname, ' ', tbl_user.u_lname) AS 'Full Name', " +
+                "app_progname AS 'Program Name', " +
+                "app_status AS 'Status' " +
+                "FROM tbl_user " +
+                "INNER JOIN tbl_applicant ON tbl_user.u_id = tbl_applicant.app_uid " +
+                "WHERE app_status = 'Accepted'"
+            );
 
-        tblapplication.setModel(DbUtils.resultSetToTableModel(rs));
-        
-    } catch (SQLException e) {
-
+            tblapplication.setModel(DbUtils.resultSetToTableModel(rs));
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); 
+        }
     }
-}
     
         Color navcolor = new Color(255,255,255);  
         Color hovercolor = new Color (0, 255, 255);
