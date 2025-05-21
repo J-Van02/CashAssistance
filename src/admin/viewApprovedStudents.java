@@ -1,0 +1,431 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package admin;
+
+import Users.*;
+import config.dbConnector;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+
+/**
+ *
+ * @author Administrator
+ */
+public class viewApprovedStudents extends javax.swing.JFrame {
+
+    /**
+     * Creates new form createUserform
+     */
+    public viewApprovedStudents() {
+        initComponents();
+        loadProgram();
+    }
+    
+    public String destination = "";
+    File selectedFile;
+    public String oldpath;
+    public String path;
+
+    private HashMap<String, Integer> programtMap = new HashMap<>();  
+    
+    public void loadProgram(){
+        dbConnector db = new dbConnector();
+        try {
+            String query = "SELECT prog_id, prog_name FROM tbl_program ORDER BY prog_name";
+            ResultSet rs = db.getData(query);
+
+            progname.removeAllItems();
+            programtMap.clear(); 
+            boolean hasProgram = false;
+
+            while (rs.next()) {
+                    hasProgram = true;
+                    int progId = rs.getInt("prog_id");
+                    String progName = rs.getString("prog_name");
+                    progname.addItem(progName);
+                    programtMap.put(progName, progId);
+            }
+
+            if (!hasProgram) {
+                JOptionPane.showMessageDialog(this,"No program available. Do you want to proceed anyway?", "No Program Found", JOptionPane.INFORMATION_MESSAGE);
+                progname.addItem("N/A");
+            }
+
+            progname.revalidate();
+            progname.repaint();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error loading program: " + e.getMessage());
+        }
+    }
+    
+    public int FileExistenceChecker(String path){
+        File file = new File(path);
+        String fileName = file.getName();
+
+        Path filePath = Paths.get("src/userImages", fileName);
+        boolean fileExists = Files.exists(filePath);
+
+        if (fileExists) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+    }
+    
+    public static int getHeightFromWidth(String imagePath, int desiredWidth) {
+    try {
+        // Read the image file
+        File imageFile = new File(imagePath);
+        BufferedImage image = ImageIO.read(imageFile);
+
+        // Get the original width and height of the image
+        int originalWidth = image.getWidth();
+        int originalHeight = image.getHeight();
+
+        // Calculate the new height based on the desired width and the aspect ratio
+        int newHeight = (int) ((double) desiredWidth / originalWidth * originalHeight);
+
+        return newHeight;
+    } catch (IOException ex) {
+        System.out.println("No image found!");
+    }
+
+    return -1;
+    }
+    
+    public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+        
+    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
+
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
+    
+    public void imageUpdater(String existingFilePath, String newFilePath){
+    File existingFile = new File(existingFilePath);
+    if (existingFile.exists()) {
+        String parentDirectory = existingFile.getParent();
+        File newFile = new File(newFilePath);
+        String newFileName = newFile.getName();
+        File updatedFile = new File(parentDirectory, newFileName);
+        existingFile.delete();
+        try {
+            Files.copy(newFile.toPath(), updatedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Image updated successfully.");
+        } catch (IOException e) {
+            System.out.println("Error occurred while updating the image: "+e);
+        }
+    } else {
+        try{
+            Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }catch(IOException e){
+            System.out.println("Error on update!");
+        }
+    }
+   }
+     
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextPane5 = new javax.swing.JTextPane();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTextPane6 = new javax.swing.JTextPane();
+        jSpinner1 = new javax.swing.JSpinner();
+        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        image = new javax.swing.JLabel();
+        homeadd = new javax.swing.JTextField();
+        schoolname = new javax.swing.JTextField();
+        famincome = new javax.swing.JTextField();
+        edulevel = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        cancel = new javax.swing.JButton();
+        schooladd = new javax.swing.JTextField();
+        status = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        studentName = new javax.swing.JTextField();
+        progname = new javax.swing.JComboBox<>();
+
+        jLabel2.setText("First Name: ");
+
+        jScrollPane5.setViewportView(jTextPane5);
+
+        jScrollPane6.setViewportView(jTextPane6);
+
+        jButton1.setText("Cancel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 0, 0));
+        setMinimumSize(new java.awt.Dimension(527, 473));
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Students Documents");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(540, 40, 120, 30);
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Home Address:");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(30, 250, 100, 30);
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("School Address:");
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(30, 130, 90, 30);
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Education Level:");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(30, 190, 130, 30);
+
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Family Monthly Income:");
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(230, 190, 140, 30);
+
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Cash Assistance Program:");
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(40, 380, 140, 30);
+
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel3.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 280, 350));
+
+        jPanel1.add(jPanel3);
+        jPanel3.setBounds(440, 70, 300, 370);
+
+        homeadd.setEditable(false);
+        jPanel1.add(homeadd);
+        homeadd.setBounds(30, 280, 390, 30);
+
+        schoolname.setEditable(false);
+        jPanel1.add(schoolname);
+        schoolname.setBounds(30, 100, 390, 30);
+
+        famincome.setEditable(false);
+        jPanel1.add(famincome);
+        famincome.setBounds(230, 220, 190, 30);
+
+        edulevel.setEditable(false);
+        jPanel1.add(edulevel);
+        edulevel.setBounds(30, 220, 190, 30);
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("School Name: ");
+        jPanel1.add(jLabel10);
+        jLabel10.setBounds(30, 70, 78, 30);
+
+        cancel.setText("Back");
+        cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cancel);
+        cancel.setBounds(70, 430, 300, 30);
+
+        schooladd.setEditable(false);
+        jPanel1.add(schooladd);
+        schooladd.setBounds(30, 160, 390, 30);
+
+        status.setEditable(false);
+        jPanel1.add(status);
+        status.setBounds(150, 330, 190, 30);
+
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Application Status");
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(40, 330, 110, 30);
+
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Student Name: ");
+        jPanel1.add(jLabel11);
+        jLabel11.setBounds(30, 10, 90, 30);
+
+        studentName.setEditable(false);
+        jPanel1.add(studentName);
+        studentName.setBounds(30, 40, 390, 30);
+
+        progname.setEnabled(false);
+        progname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prognameActionPerformed(evt);
+            }
+        });
+        jPanel1.add(progname);
+        progname.setBounds(190, 380, 140, 30);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 756, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+     
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
+        ApprovedStudents ap = new ApprovedStudents();
+        ap.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cancelActionPerformed
+
+    private void prognameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prognameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_prognameActionPerformed
+
+     
+        
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(viewApprovedStudents.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(viewApprovedStudents.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(viewApprovedStudents.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(viewApprovedStudents.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new viewApprovedStudents().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancel;
+    public javax.swing.JTextField edulevel;
+    public javax.swing.JTextField famincome;
+    public javax.swing.JTextField homeadd;
+    public javax.swing.JLabel image;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JTextPane jTextPane5;
+    private javax.swing.JTextPane jTextPane6;
+    public javax.swing.JComboBox<String> progname;
+    public javax.swing.JTextField schooladd;
+    public javax.swing.JTextField schoolname;
+    public javax.swing.JTextField status;
+    public javax.swing.JTextField studentName;
+    // End of variables declaration//GEN-END:variables
+}
